@@ -1,41 +1,61 @@
-# Burnt-Out CS Tutor 😵‍💻
+# Burnt Out CS Tutor CLI
 
-A simple terminal-based chatbot powered by **Google Gemini** (via `llama_index`) that roleplays as a **burnt-out computer science tutor**.
+A tiny command-line chatbot that pretends to be a burnt-out computer science tutor.  
+It’s powered by Google Gemini (via `llama_index`) and keeps a running conversation so it can remember what you’ve said in this session.
+
+---
+
+## Tech Stack
+
+- Python
+- Google Gemini (`gemini-2.0-flash`)
+- Docker
 
 ---
 
 ## Features
 
-- Uses **Google Gemini** via `llama_index.llms.google_genai.GoogleGenAI`
-- Persistent conversation context with `ChatMessage`
-- Personality:
-  - Calls you *nerd* sometimes
-  - A bit sarcastic, but still explains things step-by-step
-  - Tries to be supportive if you seem stressed
+- **Uses Google Gemini via `GoogleGenAI`:**  
+  Connects to the `gemini-2.0-flash` model using your `GOOGLE_API_KEY`.
+
+- **Persistent Conversation Context:**  
+  Uses `ChatMessage` objects to keep a running list of messages so the tutor remembers prior turns during the session.
+
+- **Personality:**
+  - Calls you *nerd* sometimes.
+  - A bit sarcastic, but still gives clear, step-by-step technical help.
+  - Tries to be supportive if you seem stressed (burnt out, not heartless).
+
+- **Simple CLI Interface:**
+  - Type your questions in the terminal.
+  - Type `exit`, `quit`, or `bye` to end the conversation.
 
 ---
 
-## Requirements
+## What I Learned From This Project
 
-- Python **3.11+**
-- A **Google AI Studio / Gemini API key**
-- (Optional) Docker, if you want to run it in a container
+How to call an LLM from Python
+I learned how to use llama_index.llms.google_genai.GoogleGenAI to talk to the Google Gemini (gemini-2.0-flash) model and pass messages back and forth.
+
+Managing conversation state
+By using ChatMessage and maintaining a message list, I learned how to keep a persistent conversation context so the model can respond based on previous turns.
+
+Prompting and personality design
+I practiced writing a clear system prompt that controls tone and behavior (sarcastic, burnt-out tutor that still explains step-by-step and is supportive).
+
+Basic CLI app structure
+I reinforced the pattern of a simple REPL (read–eval–print loop) in Python with while True, handling exit commands, and printing responses.
 
 ---
 
-## Setup (Local Python)
-
-git clone <your-repo-url>.git
-cd ChatBot   # or whatever your project folder is called
-
-python3 -m venv venv
-source venv/bin/activate   # on macOS / Linux
-
-pip install -r requirements.txt
-
-GOOGLE_API_KEY=your_real_api_key_here # set this in your .env file
-
-python3 app/main.py # run it locally
-
-docker build -t cstutor -f dockerfile . 
-docker run --rm -it --env-file .env cstutor # run it with docker
+## Running the Project
+### To run the project locally, follow these steps:
+  1. Clone the repo (git clone <url>)
+  2. Create a virtual environment (python3 -m venv venv)
+  3. Activate the environment (source venv/bin/activate)
+  4. Install requirements (pip install -r requirements.txt)
+  5. Set or export your Geminai API key (in .env or export ...)
+  6. Run locally (python3 app/main.py)
+### Run with Docker
+  2. Build image (docker build -t cstutor -f dockerfile .)
+  3. Run image (docker run --rm -it --env-file .env cstutor) # make sure API key is in .env
